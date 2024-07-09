@@ -1,5 +1,11 @@
-import db_controler
-import base_vars
+import sys
+from PySide6.QtWidgets import QApplication
+from ui.main_window import MainWindow
+from _version import get_version
 
-
-db_controler.add_test("INR", score=4.5, description='galougah, salamat LAB')
+if __name__ == "__main__":
+    app = QApplication(sys.argv)
+    window = MainWindow()
+    window.setWindowTitle(f"Medical Test Management v{get_version()}")
+    window.show()
+    sys.exit(app.exec())
