@@ -1,28 +1,24 @@
-from PySide6.QtWidgets import QWidget, QVBoxLayout, QPushButton, QLineEdit
-from jdatetime import datetime as jdatetime
+# jalali_date_time_picker.py
+import jdatetime
+from PySide6.QtWidgets import QDialog, QVBoxLayout, QCalendarWidget, QPushButton
 
-class JalaliDateTimePicker(QWidget):
-    def __init__(self, save_callback):
-        super().__init__()
-        self.save_callback = save_callback
+class JalaliDatePicker(QDialog):
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.setWindowTitle("select date")
+        self.setGeometry(100, 100, 400, 300)
 
         layout = QVBoxLayout()
+        self.calendar = QCalendarWidget()
+        layout.addWidget(self.calendar)
 
-        self.date_input = QLineEdit(self)
-        self.date_input.setPlaceholderText("Enter Jalali DateTime (e.g., 1400-01-01 12:30:00)")
-        layout.addWidget(self.date_input)
-
-        save_button = QPushButton("Save Jalali DateTime")
-        save_button.clicked.connect(self.save_date_time)
-        layout.addWidget(save_button)
+        self.ok_button = QPushButton("Confirm")
+        self.ok_button.clicked.connect(self.accept)
+        layout.addWidget(self.ok_button)
 
         self.setLayout(layout)
 
-    def save_date_time(self):
-        input_text = self.date_input.text()
-        try:
-            jalali_datetime = jdatetime.strptime(input_text, "%Y-%m-%d %H:%M:%S")
-            gregorian_datetime = jalali_datetime.togregorian()
-            self.save_callback(gregorian_datetime.strftime("%Y-%m-%d %H:%M:%S"))
-        except ValueError:
-            print("Invalid date format. Please enter a valid Jalali date and time.")
+    def get_selected_date(self):
+        selected_date = self.calendar.selectedDate().toPython()
+        jalali_date = jdatetime.date.fromgregorian(date=selected_date)
+        return jalali_date.strftime("%Y-%m-%d")
