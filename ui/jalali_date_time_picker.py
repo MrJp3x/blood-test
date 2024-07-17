@@ -1,5 +1,6 @@
 # jalali_date_time_picker.py
 import jdatetime
+from PySide6.QtCore import QLocale
 from PySide6.QtWidgets import QDialog, QVBoxLayout, QCalendarWidget, QPushButton
 
 class JalaliDatePicker(QDialog):
@@ -10,6 +11,7 @@ class JalaliDatePicker(QDialog):
 
         layout = QVBoxLayout()
         self.calendar = QCalendarWidget()
+        self.calendar.setLocale(QLocale.Persian)
         layout.addWidget(self.calendar)
 
         self.ok_button = QPushButton("Confirm")
