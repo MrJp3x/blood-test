@@ -1,3 +1,4 @@
+# main_window.py
 from PySide6.QtGui import QAction
 from PySide6.QtWidgets import QMainWindow, QVBoxLayout, QWidget, QLineEdit, QToolBar, QPushButton
 from db_controler import DatabaseController
@@ -17,6 +18,7 @@ class MainWindow(QMainWindow):
         # Menu bar
         menu_bar = self.menuBar()
         file_menu = menu_bar.addMenu("File")
+
         new_action = QAction("New Test", self)
         file_menu.addAction(new_action)
         help_menu = menu_bar.addMenu("Help")
@@ -44,7 +46,7 @@ class MainWindow(QMainWindow):
         layout.addWidget(self.search_input)
 
         # Test table
-        self.test_table = TestTable(self.edit_test, self.delete_test)
+        self.test_table = TestTable(self.edit_test, self.delete_test, self.load_tests)
         layout.addWidget(self.test_table)
 
         # Show Chart button
@@ -54,6 +56,9 @@ class MainWindow(QMainWindow):
 
         central_widget.setLayout(layout)
         self.load_tests()
+
+    def test(self):
+        print('test triggered')
 
     def add_test(self, test_type, result, date):
         self.db.insert_test(test_type, result, date)

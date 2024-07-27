@@ -3,6 +3,9 @@ from PySide6.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QLabel, QLineEd
 from .jalali_date_time_picker import JalaliDatePicker
 
 
+test_type = ["INR", "Blood Test", "Urine Test", "X-Ray", "MRI"]
+
+
 class TestForm(QWidget):
     def __init__(self, add_test_callback):
         super().__init__()
@@ -14,7 +17,7 @@ class TestForm(QWidget):
 
         # Test type
         self.test_type_combo = QComboBox()
-        self.test_type_combo.addItems(["Blood Test", "Urine Test", "X-Ray", "MRI"])
+        self.test_type_combo.addItems(test_type)
         layout.addWidget(QLabel("Test Type"))
         layout.addWidget(self.test_type_combo)
 
